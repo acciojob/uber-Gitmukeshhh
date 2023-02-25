@@ -2,31 +2,47 @@ package com.driver.model;
 
 import javax.persistence.*;
 
-public class TripBooking {
-
+@Entity
+@Table(name = "TripBooking")
+public class TripBooking{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int tripBookingId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int tripBookingId;
 
-    private String fromLocation;
-    private String toLocation;
+    String fromLocation;
 
-    private int distanceInKm;
+    String toLocation;
 
-    @Enumerated(value = EnumType.STRING)
-    private TripStatus status;
+    int distanceInKm;
 
-    private int bill;
+    TripStatus status;
+
+    int bill;
+
+
+    //For mapping to customer(parent)
+    @ManyToOne
+    @JoinColumn
+    Customer customer;
+
+    //For mapping to driver(parent)
+    @ManyToOne
+    @JoinColumn
+    Driver driver;
 
     public TripBooking() {
+
     }
 
-    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill) {
+    public TripBooking(int tripBookingId, String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill, Customer customer, Driver driver) {
+        this.tripBookingId = tripBookingId;
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.distanceInKm = distanceInKm;
         this.status = status;
         this.bill = bill;
+        this.customer = customer;
+        this.driver = driver;
     }
 
     public int getTripBookingId() {
@@ -77,14 +93,6 @@ public class TripBooking {
         this.bill = bill;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
-
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
@@ -93,13 +101,12 @@ public class TripBooking {
         this.customer = customer;
     }
 
-    @ManyToOne
-    @JoinColumn
-    private Driver driver;
+    public Driver getDriver() {
+        return driver;
+    }
 
-
-    @ManyToOne
-    @JoinColumn
-    private Customer customer;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 }
 

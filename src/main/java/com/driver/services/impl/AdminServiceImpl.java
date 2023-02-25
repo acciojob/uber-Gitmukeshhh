@@ -1,6 +1,5 @@
 package com.driver.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.driver.services.AdminService;
@@ -38,7 +37,9 @@ public class AdminServiceImpl implements AdminService {
 		Admin admin = adminRepository1.findById(adminId).get();
 		admin.setPassword(password);
 		adminRepository1.save(admin);
+
 		return admin;
+
 	}
 
 	@Override
@@ -51,15 +52,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Driver> getListOfDrivers() {
 		//Find the list of all drivers
-		List<Driver> drivers = driverRepository1.findAll();
-		return drivers;
+		return driverRepository1.findAll();
 	}
 
 	@Override
 	public List<Customer> getListOfCustomers() {
 		//Find the list of all customers
-		List<Customer> customerList = customerRepository1.findAll();
-		return customerList;
+		return customerRepository1.findAll();
 	}
+
 }
 
