@@ -2,47 +2,31 @@ package com.driver.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "TripBooking")
-public class TripBooking{
+public class TripBooking {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int tripBookingId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int tripBookingId;
 
-    String fromLocation;
+    private String fromLocation;
+    private String toLocation;
 
-    String toLocation;
+    private int distanceInKm;
 
-    int distanceInKm;
+    @Enumerated(value = EnumType.STRING)
+    private TripStatus status;
 
-    TripStatus status;
-
-    int bill;
-
-
-    //For mapping to customer(parent)
-    @ManyToOne
-    @JoinColumn
-    Customer customer;
-
-    //For mapping to driver(parent)
-    @ManyToOne
-    @JoinColumn
-    Driver driver;
+    private int bill;
 
     public TripBooking() {
-
     }
 
-    public TripBooking(int tripBookingId, String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill, Customer customer, Driver driver) {
-        this.tripBookingId = tripBookingId;
+    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill) {
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.distanceInKm = distanceInKm;
         this.status = status;
         this.bill = bill;
-        this.customer = customer;
-        this.driver = driver;
     }
 
     public int getTripBookingId() {
@@ -93,6 +77,14 @@ public class TripBooking{
         this.bill = bill;
     }
 
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
@@ -101,12 +93,14 @@ public class TripBooking{
         this.customer = customer;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
+    @ManyToOne
+    @JoinColumn
+    private Driver driver;
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
+
+    @ManyToOne
+    @JoinColumn
+    private
+     Customer customer;
 }
 
